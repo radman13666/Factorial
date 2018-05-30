@@ -1,0 +1,12 @@
+#ignore build directories
+
+*/build/
+
+#ignore all gradle directories
+
+*/gradle/
+
+#ignore the first gradle folder as well
+
+gradle/
+.gradle/
