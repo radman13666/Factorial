@@ -32,6 +32,5 @@ class FactorialAsyncTask implements Callable<BigInteger> {
   @Override
   public BigInteger call() throws Exception {
     return product.get();
-    //return BigInteger.ONE;
   }
 }

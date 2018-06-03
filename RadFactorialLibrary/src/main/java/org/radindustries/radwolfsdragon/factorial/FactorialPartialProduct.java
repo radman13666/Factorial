@@ -39,7 +39,5 @@ class FactorialPartialProduct {
       result = result.multiply(factor);
 
     return result;
-    
-    //return BigInteger.ONE;
   }
 }

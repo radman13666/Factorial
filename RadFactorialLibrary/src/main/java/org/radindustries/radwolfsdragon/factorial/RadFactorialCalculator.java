@@ -44,7 +44,7 @@ class RadFactorialCalculator implements FactorialCalculator {
       throw new InvalidInputException();
 
     Limits[] limitsForPartialProducts
-      = formPartialProductSet(input);
+      = formPartialProductsSetAsLimits(input);
     
     BigInteger[] partialProducts
       = evaluatePartialProducts(limitsForPartialProducts);
@@ -55,7 +55,7 @@ class RadFactorialCalculator implements FactorialCalculator {
     return factorial.toString(r);
   }
 
-  private Limits[] formPartialProductSet(BigInteger number) 
+  private Limits[] formPartialProductsSetAsLimits(BigInteger number) 
     throws InputTooSmallException {
     BigInteger numOfPartialProducts
       = chooseNumOfPartialProductsToEvaluate(number);
@@ -76,7 +76,7 @@ class RadFactorialCalculator implements FactorialCalculator {
     try {
       int n = 2;
       while(true) {
-        if( // 10^(n-1) <= number <= 10^n
+        if( // 10^(n-1) <= number < 10^n
           number.compareTo(lowerBound.pow(n - 1)) > -1 &&
           number.compareTo(upperBound.pow(n)) == -1
         ) {
@@ -105,14 +105,14 @@ class RadFactorialCalculator implements FactorialCalculator {
     }
 
     Limits[] chosenLimits
-       = e.compareTo(BigInteger.ZERO) == 1 ?
+       = e.compareTo(BigInteger.ZERO) == 1 ? // e > 0
        new Limits[q.intValue() + 1] :
        new Limits[q.intValue()]; 
 
     for (int m = 0; m < q.intValue(); m++) {
-      BigInteger lowerLimit 
+      BigInteger lowerLimit // = (b * m) + 1
         = b.multiply(BigInteger.valueOf(m)).add(BigInteger.ONE); 
-      BigInteger upperLimit 
+      BigInteger upperLimit // = b * (m + 1) 
         = b.multiply(BigInteger.valueOf(m + 1));
 
       chosenLimits[m] = new Limits();
@@ -120,9 +120,9 @@ class RadFactorialCalculator implements FactorialCalculator {
       chosenLimits[m].upperLimit = upperLimit;
     }
     
-    if (e.compareTo(BigInteger.ZERO) == 1) {
+    if (e.compareTo(BigInteger.ZERO) == 1) { // if e > 0
       chosenLimits[q.intValue()] = new Limits();
-      chosenLimits[q.intValue()].lowerLimit 
+      chosenLimits[q.intValue()].lowerLimit // = (q * b) + 1
         = q.multiply(b).add(BigInteger.ONE);
       chosenLimits[q.intValue()].upperLimit = number;
     }
